@@ -6,9 +6,7 @@ ALLOWED_EXT = {".pdf", ".docx"}
 
 print('Введите даты для фильтрации:')
 start = input('Дата с (2025/12/31): ')
-# start = '2025/12/01'
 end = input('Дата до (2025/12/31): ')
-# end = '2026/01/01'
 
 q = f"has:attachment after:{start} before:{end}"
 
@@ -18,9 +16,7 @@ else:
     base_path = Path(__file__).parent
 
 client_secret_file = base_path / "client_secret.json"
-
 gmail = Gmail(client_secret_file=str(client_secret_file))
-
 messages = gmail.get_messages(query=q)
 
 save_dir = base_path / "attachments"
