@@ -2,6 +2,18 @@ from simplegmail import Gmail
 from pathlib import Path
 import sys
 
+try:
+    print('Отметить обработанные сообщения как прочитанное?')
+    print('1 -> Да')
+    print('0 -> Нет')
+    markAsRead = int(input())
+    if markAsRead not in [0, 1]:
+        raise Exception()
+except Exception as e:
+    print('Произошла ошибка')
+    input()
+    sys.exit(1)
+
 ALLOWED_EXT = {".pdf", ".docx"}
 
 print('Введите даты для фильтрации:')
@@ -24,10 +36,13 @@ save_dir.mkdir(exist_ok=True)
 
 for message in messages:
     if message.attachments:
-        print(message.sender, '===================' , message.date)
+        print(f'Отправитель [{message.sender}], дата [{message.date}]')
         for attm in message.attachments:
             if Path(attm.filename).suffix.lower() not in ALLOWED_EXT:
                 continue
+
+            if markAsRead:
+                message.mark_as_read()
 
             file_path = save_dir / attm.filename
             counter = 1
