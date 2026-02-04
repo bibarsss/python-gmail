@@ -14,7 +14,7 @@ except Exception as e:
     input()
     sys.exit(1)
 
-ALLOWED_EXT = {".pdf", ".docx"}
+ALLOWED_EXT = [".pdf", ".docx", ".zip", ".rar", ".7z"]
 
 print('Введите даты для фильтрации:')
 start = input('Дата с (2025/12/31): ')
