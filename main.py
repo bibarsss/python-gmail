@@ -5,6 +5,7 @@ from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 import sys
 import re
 from playwright.__main__ import main as playwright_main
+import os
 
 def get_unique_path(path: Path) -> Path:
     if not path.exists():
@@ -22,6 +23,7 @@ def get_unique_path(path: Path) -> Path:
         counter += 1
 
 try:
+    os.environ["PLAYWRIGHT_BROWSERS_PATH"] = "0"
     print('1 -> Скачать прикрепленные файлы')
     print('2 -> Скачать файлы из ссылок по типу cloud.mail')
     print('3 -> Установка браузера')
