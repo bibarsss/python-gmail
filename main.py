@@ -35,6 +35,7 @@ except Exception as e:
 
 if flow == 3:
     sys.argv = ["playwright", "install", "chromium"]
+    playwright_main()
     print("Playwright Chromium installed successfully!")
     input()
     sys.exit()
