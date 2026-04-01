@@ -2,11 +2,24 @@ from simplegmail import Gmail
 from pathlib import Path
 import sys
 import re
-import os
-os.environ["PLAYWRIGHT_BROWSERS_PATH"] = "0"
 from playwright.sync_api import sync_playwright
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.__main__ import main as playwright_main
+import os
+
+os.environ["PLAYWRIGHT_BROWSERS_PATH"] = str(Path.home() / ".cache/ms-playwright")
+
+def ensure_browsers_installed():
+    # check if Chromium exists
+    chromium_path = Path(os.environ["PLAYWRIGHT_BROWSERS_PATH"]) / "chromium"
+    if not chromium_path.exists():
+        print("Playwright browsers not found. Installing Chromium...")
+        sys.argv = ["playwright", "install", "chromium"]
+        playwright_main()
+        print("Chromium installed successfully!")
+
+# call this before launching browser
+
 
 def get_unique_path(path: Path) -> Path:
     if not path.exists():
@@ -85,6 +98,7 @@ if flow == 1:
                 attm.save(filepath=str(file_path))
 
 if flow == 2:
+    ensure_browsers_installed()
     print('Скачиваются файлы из ссылок (cloud.mail)...')
 
     q = f"has:attachment after:{start} before:{end}"
