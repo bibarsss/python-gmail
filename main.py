@@ -4,15 +4,7 @@ from playwright.sync_api import sync_playwright
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 import sys
 import re
-import subprocess
-
-def ensure_browser():
-    try:
-        with sync_playwright() as p:
-            p.chromium.launch()
-    except Exception:
-        subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=True)
-
+from playwright.__main__ import main as playwright_main
 
 def get_unique_path(path: Path) -> Path:
     if not path.exists():
@@ -32,14 +24,20 @@ def get_unique_path(path: Path) -> Path:
 try:
     print('1 -> Скачать прикрепленные файлы')
     print('2 -> Скачать файлы из ссылок по типу cloud.mail')
+    print('3 -> Установка браузера')
     flow = int(input())
-    if flow not in [2, 1]:
+    if flow not in [1, 2, 3]:
         raise Exception()
 except Exception as e:
     print('Произошла ошибка')
     input()
     sys.exit(1)
 
+if flow == 3:
+    sys.argv = ["playwright", "install", "chromium"]
+    print("Playwright Chromium installed successfully!")
+    input()
+    sys.exit()
 
 ALLOWED_EXT = [".pdf", ".docx", ".zip", ".rar", ".7z"]
 
@@ -85,7 +83,6 @@ if flow == 1:
 
 if flow == 2:
     print('Скачиваются файлы из ссылок (cloud.mail)...')
-    ensure_browser()
 
     q = f"has:attachment after:{start} before:{end}"
 
