@@ -1,1 +1,2 @@
 simplegmail
+pytest-playwright
