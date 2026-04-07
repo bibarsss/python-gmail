@@ -1,3 +1,13 @@
+import os
+from pathlib import Path
+
+if getattr(sys, "frozen", False):
+    base_path = Path(sys.executable).parent
+else:
+    base_path = Path(__file__).parent
+
+os.environ["PLAYWRIGHT_BROWSERS_PATH"] = str(base_path / "playwright-browsers")
+
 from simplegmail import Gmail
 from pathlib import Path
 import sys
