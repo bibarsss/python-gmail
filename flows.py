@@ -1,13 +1,3 @@
-import os
-from pathlib import Path
-
-if getattr(sys, "frozen", False):
-    base_path = Path(sys.executable).parent
-else:
-    base_path = Path(__file__).parent
-
-os.environ["PLAYWRIGHT_BROWSERS_PATH"] = str(base_path / "playwright-browsers")
-
 from simplegmail import Gmail
 from pathlib import Path
 import sys
@@ -104,7 +94,7 @@ def run():
         messages = gmail.get_messages(query=q, include_spam_trash=True)
 
         with sync_playwright() as p:
-            browser = p.chromium.launch(headless=False, slow_mo=100)
+            browser = p.chromium.launch(channel='chrome', headless=False, slow_mo=100)
             page = browser.new_page()
 
             for message in messages:
