@@ -1,2 +1,3 @@
 simplegmail
 pytest-playwright
+# selenium==4.38.0

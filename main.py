@@ -18,9 +18,6 @@ def ensure_browsers_installed():
         playwright_main()
         print("Chromium installed successfully!")
 
-# call this before launching browser
-
-
 def get_unique_path(path: Path) -> Path:
     if not path.exists():
         return path
