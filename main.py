@@ -34,10 +34,10 @@ except Exception as e:
     sys.exit(1)
 
 if flow == 3:
+    # install Chromium browser
     sys.argv = ["playwright", "install", "chromium"]
     playwright_main()
     print("Playwright Chromium installed successfully!")
-    input()
     sys.exit()
 
 ALLOWED_EXT = [".pdf", ".docx", ".zip", ".rar", ".7z"]
